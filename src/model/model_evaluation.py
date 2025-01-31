@@ -125,6 +125,7 @@ def save_model_info(run_id: str, model_path: str, file_path: str) -> None:
     except Exception as e:
         logger.error('Error occurred while saving the model info: %s', e)
         raise
+
 dagshub.init(repo_owner='k.ritesh2887', repo_name='yt-comment-analyser', mlflow=True)
 
 def main():
