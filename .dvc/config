@@ -1,0 +1,4 @@
+[core]
+    remote = myremote
+['remote "myremote"']
+    url = /Users/ritesh/Desktop/Work/temp/dvc-storage
