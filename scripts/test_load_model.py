@@ -4,9 +4,20 @@ from mlflow.tracking import MlflowClient
 import mlflow
 import dagshub
 
-# Set your remote tracking URI
-mlflow.set_tracking_uri('https://dagshub.com/k.ritesh2887/yt-comment-analyser.mlflow')
-dagshub.init(repo_owner='k.ritesh2887', repo_name='yt-comment-analyser', mlflow=True)
+# Set up DagsHub credentials for MLflow tracking
+dagshub_token = os.getenv("DAGSHUB_PAT")
+if not dagshub_token:
+    raise EnvironmentError("DAGSHUB_PAT environment variable is not set")
+
+os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_token
+os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
+
+dagshub_url = "https://dagshub.com"
+repo_owner = "k.ritesh2887"
+repo_name = "yt-comment-analyser"
+
+# Set up MLflow tracking URI
+mlflow.set_tracking_uri(f'{dagshub_url}/{repo_owner}/{repo_name}.mlflow')
 
 @pytest.mark.parametrize("model_name, stage", [
     ("yt_chrome_plugin_model", "staging"),])
