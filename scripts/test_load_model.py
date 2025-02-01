@@ -1,8 +1,6 @@
 import mlflow.pyfunc
 import pytest
 from mlflow.tracking import MlflowClient
-import mlflow
-import dagshub
 
 # Set your remote tracking URI
 mlflow.set_tracking_uri('https://dagshub.com/k.ritesh2887/yt-comment-analyser.mlflow')
