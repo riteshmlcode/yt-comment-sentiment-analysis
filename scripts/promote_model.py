@@ -1,5 +1,7 @@
 import os
 import mlflow
+import dagshub
+
 
 def promote_model():
     # Set up DagsHub credentials for MLflow tracking
