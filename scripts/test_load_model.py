@@ -3,6 +3,7 @@ import pytest
 from mlflow.tracking import MlflowClient
 import mlflow
 import dagshub
+import os
 
 # Set up DagsHub credentials for MLflow tracking
 dagshub_token = os.getenv("DAGSHUB_PAT")
