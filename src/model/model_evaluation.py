@@ -31,6 +31,21 @@ file_handler.setFormatter(formatter)
 logger.addHandler(console_handler)
 logger.addHandler(file_handler)
 
+# Set up DagsHub credentials for MLflow tracking
+dagshub_token = os.getenv("DAGSHUB_PAT")
+if not dagshub_token:
+    raise EnvironmentError("DAGSHUB_PAT environment variable is not set")
+
+os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_token
+os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
+
+dagshub_url = "https://dagshub.com"
+repo_owner = "k.ritesh2887"
+repo_name = "yt-comment-analyser"
+
+# Set up MLflow tracking URI
+mlflow.set_tracking_uri(f'{dagshub_url}/{repo_owner}/{repo_name}.mlflow')
+
 
 def load_data(file_path: str) -> pd.DataFrame:
     """Load data from a CSV file."""
@@ -126,23 +141,10 @@ def save_model_info(run_id: str, model_path: str, file_path: str) -> None:
         logger.error('Error occurred while saving the model info: %s', e)
         raise
 
-dagshub.init(repo_owner='k.ritesh2887', repo_name='yt-comment-analyser', mlflow=True)
+#dagshub.init(repo_owner='k.ritesh2887', repo_name='yt-comment-analyser', mlflow=True)
 
 def main():
-    # Set up DagsHub credentials for MLflow tracking
-    dagshub_token = os.getenv("DAGSHUB_PAT")
-    if not dagshub_token:
-        raise EnvironmentError("DAGSHUB_PAT environment variable is not set")
-
-    os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_token
-    os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
-
-    dagshub_url = "https://dagshub.com"
-    repo_owner = "k.ritesh2887"
-    repo_name = "yt-comment-analyser"
-
-    # Set up MLflow tracking URI
-    mlflow.set_tracking_uri(f'{dagshub_url}/{repo_owner}/{repo_name}.mlflow')
+    # Set the experiment name
     mlflow.set_experiment('dvc-pipeline-runs')
     
     with mlflow.start_run() as run:
