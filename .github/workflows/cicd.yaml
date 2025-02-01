@@ -69,4 +69,10 @@ jobs:
           DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
         run: |
           pytest scripts/test_model_signature.py
+
+      - name: Run model performance test
+        env:
+          DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
+        run: |
+          pytest scripts/test_model_performance.py
       
